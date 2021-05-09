@@ -1,5 +1,7 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.one.examples.one;
 
+import lombok.Data;
+
 /**
  * Согласно паттерну внедрения зависимостей
  * зависимости присваиваются объектам
@@ -8,6 +10,7 @@ package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.one.e
  * одной из лучших практик при проектировании
  * и разработке является program-to-interface (P2I).
  */
+@Data
 public class ExampleOne {
 
     private DependencyOne dependencyOne;
