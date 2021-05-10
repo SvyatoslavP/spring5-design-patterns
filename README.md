@@ -1,6 +1,6 @@
 ## Spring 5 Design Patterns 
 -----
-![Spring 5 Design Patterns](/screenshot.png "Описание будет тут")
+![bookСover](bookСover.png "Spring 5 Design Patterns")
 
 *Ссылка на книгу [Ozon.com](https://www.ozon.ru/product/spring-vse-patterny-proektirovaniya-148640212/)*
 
