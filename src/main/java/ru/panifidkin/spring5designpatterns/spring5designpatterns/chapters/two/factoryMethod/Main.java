@@ -9,7 +9,7 @@ public class Main {
         developer.writeJavaCode();
     }
 
-   public static DeveloperFactory createDeveloperBySpecialty(String specialty) {
+    public static DeveloperFactory createDeveloperBySpecialty(String specialty) {
         if (specialty.equalsIgnoreCase("java")) {
             return new JavaDeveloperFactory();
         } else if (specialty.equalsIgnoreCase("python")) {
@@ -20,4 +20,4 @@ public class Main {
             throw new RuntimeException(specialty + " is unknown specialty");
         }
     }
-    }
+}
