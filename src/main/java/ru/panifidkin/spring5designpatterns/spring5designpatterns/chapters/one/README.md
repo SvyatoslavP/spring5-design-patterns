@@ -1,5 +1,5 @@
 ##Spring предоставляет множество шаблонных классов:
-
+---
 * JdbcTemplate;
 * JmsTemplate;
 * RestTemplate;
