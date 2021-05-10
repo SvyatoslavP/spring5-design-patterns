@@ -1,4 +1,4 @@
-package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.one.examples.two;
+package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.factoryMethod;
 
 public class Main {
 
