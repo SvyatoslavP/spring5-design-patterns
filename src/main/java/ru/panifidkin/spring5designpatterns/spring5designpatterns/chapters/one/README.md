@@ -1,67 +1,60 @@
-## Spring 5 Design Patterns глава 1
-[Ссылка на проект](https://github.com/SvyatoslavP/spring5-design-patterns/tree/master/src/main/java/ru/panifidkin/spring5designpatterns/spring5designpatterns/chapters)
------
-*Ссылка на книгу [Ozon.com](https://www.ozon.ru/product/spring-vse-patterny-proektirovaniya-148640212/)*
+##Spring предоставляет множество шаблонных классов:
 
-Полезные упоминания:
+* JdbcTemplate;
+* JmsTemplate;
+* RestTemplate;
+* WebServiceTemplate.
+
+Существует два основных типа контейнеров Spring:
+* фабрики компонентов;
+* контексты приложения.
+
+Фабрики компонентов
+Во фреймворке Spring интерфейс org.springframework.beans.factory.BeanFactory определяет фабрику компонентов — она представляет собой контейнер обратного управления.
+
+Контексты приложений
+Во фреймворке Spring интерфейс org.springframework.context.ApplicationContext также определяет контейнер обратного управления Spring. Это просто оболочка для фабрики компонентов, предоставляющая некоторые дополнительные возможности контекста приложения, например поддержку аспектно-ориентированного программирования (и, как следствие, декларативных механизмов для транзакций, обеспечения безопасности и некоторых инструментов).
 
 
-* Паттерн проектирования «Фабрика». Реализация паттерна во фреймворке Spring
-Этот паттерн прозрачно используется во фреймворке Spring для реализации контейнеров Spring с помощью интерфейсов BeanFactory и ApplicationContext. 
-Контейнеры Spring на основе паттерна «Фабрика» создают компоненты Spring для приложений фреймворка и управляют жизненным циклом каждого из них. 
-Интерфейсы 
-###BeanFactory и ApplicationContext 
-являются фабричными, а в Spring есть множество классов реализаций. Метод getBean() — фабричный, возвращающий соответствующие компоненты Spring.
+Создание контейнера с контекстом приложения
+Spring предоставляет несколько видов контекстов приложений, используемых в качестве контейнеров компонентов. Есть много реализаций интерфейса ApplicationContext, включая следующие:
+* FileSystemXmlApplicationContext — загружает определение контекста приложения из конфигурационных XML-файлов в файловой системе;
+* ClassPathXmlApplicationContext — загружает определение контекста приложения из конфигурационных XML-файлов, указанных в библиотеке классов приложения;
+* AnnotationConfigApplicationContext — загружает определение контекста приложения из конфигурационных классов Java, указанных в библиотеке классов приложения.
 
-* В основе интерфейса
-###FactoryBean
-из фреймворка Spring лежит паттерн проектирования «Абстрактная фабрика». Spring предоставляет множество реализаций данного интерфейса, например ProxyFactoryBean, JndiFactoryBean, LocalSessionFactoryBean, LocalContainerEntityManagerFactoryBean и т. д. Интерфейс FactoryBean также помогает Spring конструировать те объекты, которые фреймворк не может легко сконструировать сам.
+Spring предоставляет также веб-реализации интерфейса ApplicationContext, например:
+* XmlWebApplicationContext — загружает определение контекста приложения из конфигурационных XML-файлов, содержащихся внутри веб-приложения;
+* AnnotationConfigWebApplicationContext — загружает определение контекста приложения из конфигурационных классов Java.
 
-Пример испольования паттерна фабричный метод
-```
-public class Main {
+Жизнь компонента в контейнере
 
-    public static void main(String[] args) {
-        DeveloperFactory developerFactory = createDeveloperBySpecialty("php");
+1. Загружаются все определения компонентов, тем самым создается ориентированный граф.
+2. Создаются и запускаются экземпляры BeanFactoryPostProcessor (при этом можно обновить определения компонентов).
+3. Создается экземпляр каждого компонента.
+4. Spring внедряет значения и ссылки в свойства компонентов.
+5. Spring передает идентификатор компонента методу setBeanName() интерфейса BeanNameAware, если некий компонент реализует его.
+6. Spring передает ссылку на фабрику компонентов методу setBeanFactory() класса BeanFactoryAware, если некий компонент реализует его.
+7. Spring передает ссылку на контекст приложения методу setApplicationContext() класса ApplicationContextAware, если некий компонент реализует его.
+8. Если какие-либо из компонентов реализуют интерфейс BeanPostProcessor, то Spring модифицирует их экземпляры перед вызовом инициализации в контейнере, вызывая их методы postProcessBeforeInitialization().
+9. При реализации компонентом интерфейса InitializingBean Spring вызывает метод afterPropertiesSet() для инициализации процесса или загрузки ресурсов для приложения. Его работа зависит от выбранного метода реализации. Существуют и другие методы, выполняющие этот шаг, например init-method тега <bean>, атрибут initMethod аннотации @Bean и аннотация @PostConstruct из JSR 250.
+10. Если какие-либо компоненты реализуют интерфейс BeanPostProcessor, то Spring модифицирует их экземпляры после вызова инициализации в контейнере, вызывая их методы postProcessAfterInitialization().
+11. Теперь ваш компонент готов к использованию и приложение может обращаться к нему, вызывая метод getBean() контекста приложения. Компоненты остаются жить в контексте приложения, пока он не будет закрыт вызовом метода close().
+12. Если компонент реализует интерфейс DisposibleBean, то Spring вызывает его метод destroy() для завершения любого процесса или очистки ресурсов приложения. Есть и другие методы для этой цели — например, destroy-method тега <bean>, атрибут destroyMethod аннотации @Bean или аннотация @PreDestroy из JSR 250.
 
-        Developer developer = developerFactory.createDeveloper();
-        developer.writeJavaCode();
-    }
-
-    public static DeveloperFactory createDeveloperBySpecialty(String specialty) {
-        if (specialty.equalsIgnoreCase("java")) {
-            return new JavaDeveloperFactory();
-        } else if (specialty.equalsIgnoreCase("python")) {
-            return new PythonDeveloperFactory();
-        } else if (specialty.equalsIgnoreCase("php")) {
-            return new PhpDeveloperFactory();
-        } else {
-            throw new RuntimeException(specialty + " is unknown specialty");
-        }
-    }
-}
-```
-Пример испольования паттерна абстрактная фабрика
-```
-public class SuperBankSystem {
-    public static void main(String[] args) {
-        ProjectTeamFactory teamFactory = new BankingTeamFactory();
-        Developer developer = teamFactory.getDeveloper();
-        Tester tester = teamFactory.getTester();
-        ProjectManager projectManager = teamFactory.getProjectManager();
-
-        developer.writeCode();
-        tester.testCode();
-        projectManager.manageProject();
-
-    }
-}
-```
-
-## Другие полезные книги на эту тему
-* [Spring Boot 2. Лучшие практики для профессионалов Гутьеррес Фелипе | Гутьеррес Фелипе](https://www.ozon.ru/context/detail/id/211432310/?asb=HlZ0mKEKmSkTW5wTMiT3ubd36ZzgIBto6Yg%252B5H2z%252BlY%253D&asb2=HlZ0mKEKmSkTW5wTMiT3ubd36ZzgIBto6Yg-5H2z-lY&keywords=spring)
-
-* [Spring 5 для профессионалов | Козмина Юлиана, Харроп Роб](https://www.ozon.ru/context/detail/id/149092813/?asb=PaU4Vb0eY4ONxlfT7oQWPnf3bXtUEIbaeeUrXh2a7Ac%253D&asb2=PaU4Vb0eY4ONxlfT7oQWPnf3bXtUEIbaeeUrXh2a7Ac&keywords=spring)
-
-* [Шаблоны корпоративных приложений | Ми Роберт, Фаулер Мартин](https://www.ozon.ru/product/shablony-korporativnyh-prilozheniy-147417586/?stat=YW5fMQ%3D%3D)
-
+Новые возможности Spring Framework 5.0
+Spring 5.0 — самая свежая версия фреймворка. В ней доступно много новых возможностей, включая описанные ниже.
+* Поддерживается JDK 8 + 9 и Java EE 7 Baseline.
+Java 8 — минимальное требование для Spring 5.0.
+Фреймворк Spring требует как минимум Java EE 7 для работы приложений Spring Framework 5.0. Это значит, что требуется Servlet 3.1, JMS 2.0, JPA 2.1.
+* Удалены устаревшие пакеты, классы и методы.
+В Spring 5.0 некоторые пакеты были объявлены устаревшими или удалены. Например, пакет mock.static был удален из модуля spring-aspects, так что исчезла поддержка аспекта AnnotationDrivenStaticEntityMockingControl.
+Такие пакеты, как web.view.tiles2 и orm.hibernate3/hibernate4, тоже были удалены из Spring 5.0. В последней версии фреймворка используются Tiles 3 и Hibernate 5.
+Фреймворк Spring 5.0 больше не поддерживает Portlet, Velocity, JasperReports, XMLBeans, JDO, Guava (и т. д.).
+Некоторые классы и методы, объявленные устаревшими в более ранних версиях, были удалены из Spring 5.0.
+* Добавлена новая модель реактивного программирования.
+Эта модель программирования была введена в Spring 5.0. Напомню несколько фактов о модели реактивного программирования.
+Spring 5 вводит модуль DataBuffer и абстракции кодирования-декодирования с неблокирующей семантикой в модель реактивного программирования.
+Используя реактивную модель, Spring 5.0 предоставляет веб-модуль Spring для реализации кодеков сообщений HTTP с поддержкой JSON (Jackson) и XML (JAXB).
+Модель реактивного программирования в Spring добавляет новый модуль spring-web-reactive для реактивной поддержки модели программирования @Controller, адаптируя реактивные потоки к контейнерам Servlet 3.1, как и, например, к Netty и Undertow.
+В Spring 5.0 также появляется интерфейс WebClient с реактивной поддержкой на стороне клиента.
+Данный перечень позволяет увидеть, что в Spring 5 есть множество новых замечательных возможностей. В этой книге мы рассмотрим многие из них вместе с примерами и используемыми паттернами проектирования.
