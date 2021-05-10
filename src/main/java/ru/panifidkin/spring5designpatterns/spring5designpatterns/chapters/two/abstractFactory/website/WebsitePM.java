@@ -2,6 +2,9 @@ package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.a
 
 import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.ProjectManager;
 
+/**
+ * Проект менеджер приложения website
+ */
 public class WebsitePM implements ProjectManager {
     @Override
     public void manageProject() {

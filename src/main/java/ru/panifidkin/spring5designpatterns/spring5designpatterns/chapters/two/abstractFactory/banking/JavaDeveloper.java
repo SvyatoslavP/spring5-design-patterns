@@ -2,6 +2,9 @@ package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.a
 
 import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.Developer;
 
+/**
+ * Разработчик банковского приложения
+ */
 public class JavaDeveloper implements Developer {
     @Override
     public void writeCode() {

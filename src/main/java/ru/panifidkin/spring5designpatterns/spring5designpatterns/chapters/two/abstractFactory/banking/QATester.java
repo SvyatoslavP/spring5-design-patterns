@@ -2,6 +2,9 @@ package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.a
 
 import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.Tester;
 
+/**
+ * QA тестер банковского приложения
+ */
 public class QATester implements Tester {
     @Override
     public void testCode() {
