@@ -1,9 +1,11 @@
 ## Spring 5 Design Patterns 
 -----
+![Spring 5 Design Patterns](/screenshot.png "Описание будет тут")
+
 *Ссылка на книгу [Ozon.com](https://www.ozon.ru/product/spring-vse-patterny-proektirovaniya-148640212/)*
 
 Проект по книге Spring 5 Design Patterns 
-с моими примера и комментариями. >:^P
+с моими примерами и комментариями. >:^P
 
 ## Другие полезные книги на эту тему
 * [Spring Boot 2. Лучшие практики для профессионалов Гутьеррес Фелипе | Гутьеррес Фелипе](https://www.ozon.ru/context/detail/id/211432310/?asb=HlZ0mKEKmSkTW5wTMiT3ubd36ZzgIBto6Yg%252B5H2z%252BlY%253D&asb2=HlZ0mKEKmSkTW5wTMiT3ubd36ZzgIBto6Yg-5H2z-lY&keywords=spring)
