@@ -5,6 +5,9 @@ import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.ab
 import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.ProjectTeamFactory;
 import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.Tester;
 
+/**
+ * Фабрика для создания команды преднозначенной для банковского приложения
+ */
 public class BankingTeamFactory implements ProjectTeamFactory {
     @Override
     public Developer getDeveloper() {
