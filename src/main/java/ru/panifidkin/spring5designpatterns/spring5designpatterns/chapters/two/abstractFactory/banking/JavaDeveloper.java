@@ -1,6 +1,6 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.banking;
 
-import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.Developer;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.abstractEntity.Developer;
 
 /**
  * Разработчик банковского приложения

@@ -1,6 +1,9 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.factoryMethod;
 
 import lombok.Data;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.factoryMethod.abstractEntity.Developer;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.factoryMethod.abstractEntity.DeveloperFactory;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.factoryMethod.implementationForEntity.PythonDeveloper;
 
 /**
  * Без паттерна фабрика я бы в ручную создавал бы зависимость Developer

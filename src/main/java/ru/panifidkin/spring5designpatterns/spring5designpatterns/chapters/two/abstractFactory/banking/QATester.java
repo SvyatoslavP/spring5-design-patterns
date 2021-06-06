@@ -1,6 +1,6 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.banking;
 
-import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.Tester;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.two.abstractFactory.abstractEntity.Tester;
 
 /**
  * QA тестер банковского приложения

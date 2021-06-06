@@ -1,5 +1,8 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.bridge;
 
+/**
+ * Общий интерфейс всех устройств
+ */
 public interface Device {
     boolean isEnabled();
 

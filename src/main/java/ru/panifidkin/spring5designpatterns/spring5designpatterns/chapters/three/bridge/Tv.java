@@ -1,5 +1,8 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.bridge;
 
+/**
+ * Телевидение
+ */
 public class Tv implements Device {
     private boolean on = false;
     private int volume = 30;

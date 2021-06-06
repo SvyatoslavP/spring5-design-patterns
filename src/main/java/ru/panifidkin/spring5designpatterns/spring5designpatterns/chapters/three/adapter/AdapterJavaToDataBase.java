@@ -1,6 +1,9 @@
 package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.adapter;
 
-public class AdapterJavaToDataBase extends JavaApplication implements DataBase{
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.adapter.javaCode.JavaApplication;
+import ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.adapter.unknownInterface.DataBase;
+
+public class AdapterJavaToDataBase extends JavaApplication implements DataBase {
 
     @Override
     public void insert() {
