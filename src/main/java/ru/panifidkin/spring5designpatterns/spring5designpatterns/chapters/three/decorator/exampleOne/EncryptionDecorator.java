@@ -1,5 +1,6 @@
-package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.decorator;
+package ru.panifidkin.spring5designpatterns.spring5designpatterns.chapters.three.decorator.exampleOne;
 
+import java.io.IOException;
 import java.util.Base64;
 
 /**
@@ -12,7 +13,7 @@ public class EncryptionDecorator extends DataSourceDecorator {
     }
 
     @Override
-    public void writeData(String data) {
+    public void writeData(String data) throws IOException {
         super.writeData(encode(data));
     }
 
